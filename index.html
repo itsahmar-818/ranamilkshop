@@ -3,228 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rana Ahmad Milk Shop | Pure Dairy Products</title>
-    
-    <!-- Favicon - use your logo -->
-    <link rel="icon" type="image/png" href="https://files.catbox.moe/6g2v8j.png">
-    
+    <title>رانا احمد ملک شاپ - پورے ماہ کا روزنامچہ (حساب کے ساتھ)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root {
-            --primary: #1e40af;
-            --primary-dark: #1e3a8a;
-            --light: #f8fafc;
-        }
+        /* Custom styles to mimic the ledger paper look and feel */
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            direction: rtl;
-            color: #111827;
-            background: var(--light);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfaf5; /* very light warm cream */
+            direction: rtl; /* Ensure RTL flow for Urdu */
+            color: #3c2f2f;
         }
-        .urdu-text {
-            font-family: 'Noto Nastaliq Urdu', serif;
+        .ledger-page {
+            width: 100%;
+            max-width: 400px; /* Width similar to a typical receipt/ledger book page */
+            background-color: white;
+            padding: 1.0rem;
+            margin: 1rem auto 1rem; /* Adjust margin for button below */
+            box-shadow: 0 6px 16px rgba(139, 69, 19, 0.12);
+            border: 1px solid #c89f5e; /* warm golden-brown border */
+            border-radius: 8px;
         }
-        .logo-circle {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 8px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        .main-table, .footer-table, .extra-products-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.8rem;
         }
-        .nav-logo {
-            width: 62px;
-            height: 62px;
+        
+        /* Combined table styling for ledger cells */
+        .main-table th, .main-table td, .footer-table td, .extra-products-table td {
+            border: 1px solid #c89f5e;
+            padding: 0.2rem 0.4rem;
+            height: 1.5rem; /* Standard row height */
+            text-align: center;
         }
-        .hero {
-            background: linear-gradient(135deg, rgba(30,64,175,0.92) 0%, rgba(30,58,138,0.95) 100%),
-                        url('https://images.unsplash.com/photo-1550581190-9be93909ee43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-            background-blend-mode: multiply;
+        .main-table th {
+           background-color: #f9e8d2; /* soft warm peach */
+            color: #5c3f1e;
+            font-weight: bold;
         }
-        .price-tag {
-            background: #eff6ff;
-            color: #1e40af;
-            font-weight: 600;
+        /* Style for the editable cells */
+        [contenteditable="true"]:focus {
+            outline: 1px dashed #000;
+            outline-offset: -1px;
+            background-color: #fffbeb; /* Light yellow background on focus */
         }
-        .today-badge {
-            background: #10b981;
-            color: white;
-            font-size: 0.875rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            margin-bottom: 0.75rem;
+        /* Style for numeric input cells */
+        .numeric-cell {
+            text-align: left; /* Align numbers to the left for better readability (optional) */
+            direction: ltr; /* Display numbers in LTR format */
+            font-family: 'Segoe UI', monospace;
+        }
+        .whatsapp-icon {
+            color: #25D366; 
             display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.2rem;
+            margin-right: 0.1rem;
+            width: 25px; /* Slightly larger icon */
+            height: 20px;
+        }
+        .export-button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        .calculate-btn {
+            background-color: #7c2d12; /* Blue button for action */
+            color: white;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            border-radius: 0.3rem;
+            transition: background-color 0.3s;
+        }
+        .calculate-btn:hover {
+            background-color: #2563EB;
+        }
+        /* Class to hide elements specifically for export */
+        .hide-on-export {
+            display: none !important;
+        }
+        h1 {
+            color: #5c3f1e;
+        }
+        .text-important {
+            color: #7c2d12;
+        }
+
+        /* NEW BOX STYLING */
+        .data-entry-box {
+            border: 1px solid #c89f5e;
+            background-color: #fffdfa;
+            border-radius: 30px;
+            padding: 3px 8px;
+            display: flex;
+            align-items: center;
+            min-height: 8px;
+        }
+
+        @media (max-width: 640px) {
+            .ledger-page {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            .main-table th, .main-table td, .footer-table td, .extra-products-table td {
+                padding: 0.1rem 0.3rem;
+                font-size: 0.75rem;
+                height: 1.2rem;
+            }
         }
     </style>
 </head>
-<body>
+<body class="p-6">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <img src="logo.png" alt="Rana Ahmad Milk Shop Logo" class="nav-logo">
-                <span class="text-xl font-bold text-gray-900 urdu-text">رانا احمد ملک شاپ</span>
+    <div class="max-w-[400px] mx-auto mb-4 border border-red-500 p-3 rounded bg-red-50 text-red-800" id="calculationBox">
+        <h3 class="text-lg font-bold text-center mb-2">خودکار حساب کتاب</h3>
+        <div class="flex justify-between items-center text-sm mb-3">
+            <span class="font-bold ml-2">فی کلو ریٹ:</span>
+            <span contenteditable="true" id="milkRate" class="border border-amber-400 bg-white px-3 py-1 min-w-[70px] text-right numeric-cell rounded">200</span>
+            <button id="calculateBtn" class="calculate-btn">
+                کل حساب لگائیں
+            </button>
+        </div>
+        <div class="text-xs text-center opacity-80">
+            نوٹ: یہ ریٹ گاہک کو بل پر نظر نہیں آئے گا۔
+        </div>
+    </div>
+    
+    <div class="ledger-page" id="ledgerContent">
+        <div class="text-center mb-3">
+            <h1 class="text-2xl font-bold border-b-2 border-[#c89f5e] inline-block px-8 pb-1">
+                رانا احمد ملک شاپ
+            </h1> 
+            
+            <div class="text-xs mt-1 leading-relaxed">
+                <span class="font-bold ml-4 flex justify-center items-center">
+                    پروپرائٹر: 
+                    رانا احمر لطیف 
+                    <span class="whatsapp-icon ml-1 mr-1">
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92C2.13 13.77 2.61 15.54 3.55 17.1L2.09 22.07L7.15 20.6C8.67 21.46 10.33 21.91 12.04 21.91C17.5 21.91 21.96 17.45 21.96 11.99C21.96 6.53 17.5 2 12.04 2ZM17.29 16.32C17.02 16.73 15.65 17.47 15.35 17.57C15.05 17.67 14.86 17.72 14.28 17.43C13.7 17.14 12.02 16.58 10.08 15.02C8.58 13.77 7.56 12.35 7.26 11.86C6.97 11.37 6.38 10.6 6.7 10.3C6.98 10 7.28 9.94 7.57 9.92C7.81 9.9 8.05 9.87 8.27 10.3C8.51 10.73 9.17 12.34 9.24 12.48C9.31 12.62 9.38 12.78 9.28 13.01C9.18 13.24 9.09 13.31 8.89 13.55C8.69 13.78 8.46 14.02 8.32 14.16C8.19 14.3 8.04 14.44 8.28 14.75C8.51 15.06 9.01 15.89 9.87 16.63C10.74 17.37 11.41 17.6 11.66 17.72C11.91 17.85 12.19 17.77 12.39 17.63C12.63 17.47 13.38 17.07 13.65 16.7C13.92 16.33 14.16 16.2 14.41 16.1C14.66 16 17.04 15 17.47 15.65C17.91 16.29 17.91 16.24 17.29 16.32Z"/></svg>
+                    </span>
+                    <span contenteditable="true">0323-6717478</span>
+                    
+                    <span class="mr-4 ml-4"></span>
+                    رانا حامد لطیف 
+                    <span class="whatsapp-icon ml-2 mr-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92C2.13 13.77 2.61 15.54 3.55 17.1L2.09 22.07L7.15 20.6C8.67 21.46 10.33 21.91 12.04 21.91C17.5 21.91 21.96 17.45 21.96 11.99C21.96 6.53 17.5 2 12.04 2ZM17.29 16.32C17.02 16.73 15.65 17.47 15.35 17.57C15.05 17.67 14.86 17.72 14.28 17.43C13.7 17.14 12.02 16.58 10.08 15.02C8.58 13.77 7.56 12.35 7.26 11.86C6.97 11.37 6.38 10.6 6.7 10.3C6.98 10 7.28 9.94 7.57 9.92C7.81 9.9 8.05 9.87 8.27 10.3C8.51 10.73 9.17 12.34 9.24 12.48C9.31 12.62 9.38 12.78 9.28 13.01C9.18 13.24 9.09 13.31 8.89 13.55C8.69 13.78 8.46 14.02 8.32 14.16C8.19 14.3 8.04 14.44 8.28 14.75C8.51 15.06 9.01 15.89 9.87 16.63C10.74 17.37 11.41 17.6 11.66 17.72C11.91 17.85 12.19 17.77 12.39 17.63C12.63 17.47 13.38 17.07 13.65 16.7C13.92 16.33 14.16 16.2 14.41 16.1C14.66 16 17.04 15 17.47 15.65C17.91 16.29 17.91 16.24 17.29 16.32Z"/></svg>
+                    </span>
+                    <span contenteditable="true">0300-7198213</span>
+                </span>
             </div>
             
-            <div class="hidden md:flex items-center gap-10 text-gray-700 font-medium">
-                <a href="#home" class="hover:text-blue-700 transition">ہوم</a>
-                <a href="#products" class="hover:text-blue-700 transition">مصنوعات</a>
-                <a href="#contact" class="hover:text-blue-700 transition">رابطہ</a>
-            </div>
-            
-            <div>
-                <a href="https://wa.me/923236717478" target="_blank" 
-                   class="bg-green-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-green-700 transition">
-                    واٹس ایپ پر آرڈر کریں
-                </a>
+            <div class="grid grid-cols-2 gap-1 mt-4 text-sm">
+                <div class="data-entry-box">
+                    <span class="font-bold ml-2 text-important">بل نمبر:</span>
+                    <span id="invoiceNumber" class="flex-grow text-center numeric-cell"></span>
+                </div>
+                <div class="data-entry-box">
+                    <span class="font-bold ml-2 text-important">مہینہ:</span>
+                    <span contenteditable="true" class="flex-grow text-center numeric-cell"> </span>
+                </div>
+                <div class="data-entry-box col-span-2">
+                    <span class="font-bold ml-2 text-important">نام خریدار:</span>
+                    <span contenteditable="true" class="flex-grow text-right px-2"></span>
+                </div>
+                <div class="data-entry-box">
+                    <span class="font-bold ml-2 text-important">ریٹ:</span>
+                    <span id="displayRate" class="flex-grow text-center numeric-cell ">200</span>
+                </div>
+                <div class="data-entry-box">
+                    <span class="font-bold ml-2 text-important">موبائل:</span>
+                    <span contenteditable="true" class="flex-grow text-center numeric-cell"></span>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero -->
-    <section id="home" class="hero min-h-screen flex items-center justify-center text-center text-white pt-24">
-        <div class="max-w-5xl px-6">
-            <div class="flex justify-center mb-10">
-                <div class="logo-circle">
-                    <img src="logo.png" alt="Rana Ahmad Milk Shop" class="w-full h-full object-cover">
-                </div>
-            </div>
-            
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">
-                Rana Ahmad Milk Shop
-            </h1>
-            
-            <p class="text-2xl md:text-3xl font-light mb-12 opacity-90 urdu-text">
-                خالص دودھ اور تازہ ڈیری مصنوعات —    
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="#products" class="bg-white text-blue-900 px-10 py-5 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-100 transition">
-                    مصنوعات دیکھیں
-                </a>
-                <a href="#contact" class="border-2 border-white text-white px-10 py-5 rounded-lg text-lg font-semibold hover:bg-white/10 transition">
-                    رابطہ کریں
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products with Updated Rates -->
-    <section id="products" class="py-24 px-6 bg-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 urdu-text">
-                ہماری تازہ مصنوعات اور آج کے ریٹس
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <!-- Fresh Milk - Updated to 210 PKR -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
-                    <div class="h-64 bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center">
-                        <span class="text-8xl">🥛</span>
-                    </div>
-                    <div class="p-8 text-center">
-                        <div class="today-badge">آج کا خصوصی ریٹ</div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3 urdu-text">تازہ خالص دودھ</h3>
-                        <p class="text-gray-600 mb-4 urdu-text">100% قدرتی، روزانہ فارم سے براہ راست (گائے / بھینس)</p>
-                        <div class="price-tag inline-block px-8 py-4 rounded-lg text-xl font-bold">
-                            PKR 200 فی لیٹر
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Desi Ghee -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
-                    <div class="h-64 bg-gradient-to-br from-yellow-50 to-gray-100 flex items-center justify-center">
-                        <span class="text-8xl">🧈</span>
-                    </div>
-                    <div class="p-8 text-center">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3 urdu-text">خالص دیسی گھی</h3>
-                        <p class="text-gray-600 mb-4 urdu-text">روایتی بلائی ہوا، اعلیٰ معیار اور خوشبودار</p>
-                        <div class="price-tag inline-block px-6 py-3 rounded-lg text-lg">
-                              PKR 2,500 فی کلو
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dahi -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
-                    <div class="h-64 bg-gradient-to-br from-green-50 to-gray-100 flex items-center justify-center">
-                        <span class="text-8xl">🥄</span>
-                    </div>
-                    <div class="p-8 text-center">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3 urdu-text">قدرتی دہی</h3>
-                        <p class="text-gray-600 mb-4 urdu-text">تازہ، گاڑھا اور کریمی — بغیر کسی ملاوٹ</p>
-                        <div class="price-tag inline-block px-6 py-3 rounded-lg text-lg">
-                            PKR 220 فی کلو
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Khoya & Makhan -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
-                    <div class="h-64 bg-gradient-to-br from-amber-50 to-gray-100 flex items-center justify-center">
-                        <span class="text-8xl">🍮</span>
-                    </div>
-                    <div class="p-8 text-center">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3 urdu-text">  کریم</h3>
-                        <p class="text-gray-600 mb-4 urdu-text">تازہ کریم خصوصی آرڈر پر</p>
-                        <div class="price-tag inline-block px-6 py-3 rounded-lg text-lg">
-                            PKR 1500 فی کلو
-                        </div>
-                    </div>
+        <table class="main-table mt-4">
+            <thead>
+                <tr>
+                    <th class="w-[20%]">تاریخ</th>
+                    <th class="w-[30%]">کلو</th>
+                    <th class="w-[20%]">تاریخ</th>
+                    <th class="w-[30%]">کلو</th>
+                </tr>
+            </thead>
+            <tbody id="ledgerBody"></tbody>
+        </table>
+        
+        <div class="flex justify-between mt-2">
+            <div class="w-2/5">
+                <table class="footer-table">
+                    <tr>
+                        <td class="w-1/2">کل دودھ</td>
+                        <td id="totalMilkKg" class="w-1/2 numeric-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="w-1/2">کل رقم</td>
+                        <td id="totalCalculatedAmount" class="w-1/2 numeric-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="w-1/2">بقایا</td>
+                        <td contenteditable="true" id="previousBalance" class="w-1/2 numeric-cell">0</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold w-1/2">ٹوٹل رقم</td>
+                        <td id="grandTotalAmount" class="w-1/2 bg-gray-200 font-bold numeric-cell text-[#7c2d12]"></td>
+                    </tr>
+                </table>
+                <div class="mt-8 text-center">
+                    <img src="sign.jpg" class="h-12 mx-auto mb-1 opacity-80">
+                    <div class="border-t border-[#c89f5e] w-32 mx-auto"></div>
+                    <div class="text-[10px] mt-1 font-bold text-important">Authorized Signatory</div>
+                    <div id="issueDateTime" class="mt-1 text-[8px] text-gray-500"></div>
                 </div>
             </div>
 
-            <div class="mt-16 text-center text-gray-600 text-lg urdu-text">
-                <p>نوٹ: تمام ریٹس مارکیٹ کے مطابق ہیں اور تبدیل ہو سکتے ہیں۔ تازہ ترین قیمت اور بلک آرڈر کے لیے براہ کرم واٹس ایپ پر رابطہ کریں۔</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="py-24 px-6 bg-gray-50">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-gray-900 urdu-text">
-                ہم سے رابطہ کریں
-            </h2>
-            
-            <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-                <div class="bg-white p-10 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-bold mb-4 urdu-text">رانا احمر لطیف</h3>
-                    <a href="tel:03236717478" class="text-3xl font-medium text-blue-700 block mb-6 hover:underline">0323 6717478</a>
-                    <a href="https://wa.me/923236717478" target="_blank" 
-                       class="block bg-green-600 text-white py-4 rounded-lg font-medium hover:bg-green-700 transition">
-                        واٹس ایپ پر بات کریں
-                    </a>
+            <div class="w-3/5 mr-2 flex flex-col justify-end">
+                <div class="text-xs p-3 border border-amber-300 rounded bg-amber-50/50 mb-3">
+                    <div class="text-center font-medium">
+                        دودھ لے جا کر فورا گرم کر لیں
+                        <br>
+                        تمام مصنوعات خالص دودھ سے تیار کی جاتی ہیں۔
+                        <br>
+شادی و تقاریب کے خصوصی آرڈرز دستیاب ہیں — براہِ کرم بل کی ادائیگی بروقت فرمائیں۔                    </div>
                 </div>
                 
-                <div class="bg-white p-10 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-bold mb-4 urdu-text">رانا حامد لطیف</h3>
-                    <a href="tel:03007198213" class="text-3xl font-medium text-blue-700 block mb-6 hover:underline">0300 7198213</a>
-                    <a href="https://wa.me/923007198213" target="_blank" 
-                       class="block bg-green-600 text-white py-4 rounded-lg font-medium hover:bg-green-700 transition">
-                        واٹس ایپ پر بات کریں
-                    </a>
-                </div>
+                <table class="extra-products-table">
+                    <tr><td class="font-bold bg-amber-50">دیسی گھی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+                    <tr><td class="font-bold bg-amber-50">دہی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+                    <tr><td class="font-bold bg-amber-50">مکھن</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+                    <tr><td class="font-bold bg-amber-50">کریم</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+                </table>
             </div>
-            
-            <p class="mt-16 text-xl text-gray-700 urdu-text">
-                غلہ منڈی نزد کریاں والا دربار، ملتان، پاکستان<br>
-                اوقات کار: صبح 6 بجے سے رات 8 بجے تک
-            </p>
         </div>
-    </section>
+    </div>
+    
+    <div class="max-w-md mx-auto p-4 text-center">
+        <button id="exportBtn" class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg w-full">
+            تصویر بنا کر ڈاؤن لوڈ کریں
+        </button>
+        <div id="statusMessage" class="mt-3 text-sm font-medium text-gray-700 hidden"></div>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-12 text-center">
-        <img src="logo.png" alt="Logo" class="w-24 h-24 mx-auto mb-6 opacity-80">
-        <p class="text-lg">© 2026 Rana Ahmad Milk Shop. تمام حقوق محفوظ ہیں۔</p>
-        <p class="mt-2 text-sm opacity-70 urdu-text">خالص معیار — جدید سٹینڈرڈز — خاندانی اعتبار</p>
-    </footer>
+<script>
+// --- Re-using your exact same scripts ---
 
+function getNumber(el) {
+    return parseFloat(el.textContent.trim().replace(/,/g, '')) || 0;
+}
+
+function formatCurrency(amount) {
+    return Math.round(amount).toLocaleString('en-US');
+}
+
+function autoRecalculate() {
+    const milkAmount = getNumber(document.getElementById('totalCalculatedAmount'));
+    const prevBalance = getNumber(document.getElementById('previousBalance'));
+    let extraTotal = 0;
+    document.querySelectorAll('.extra-item').forEach(item => {
+        extraTotal += getNumber(item);
+    });
+    const grandTotal = milkAmount + prevBalance + extraTotal;
+    document.getElementById('grandTotalAmount').textContent = formatCurrency(grandTotal);
+}
+
+document.querySelectorAll('.extra-item, #previousBalance').forEach(el => {
+    el.addEventListener('input', autoRecalculate);
+    el.addEventListener('blur', autoRecalculate);
+});
+
+const tbody = document.getElementById('ledgerBody');
+const MAX_DAYS = 31;
+const HALF_ROWS = 16; 
+
+(function() {
+    for (let i = 1; i <= HALF_ROWS; i++) {
+        const day1 = i;
+        const day2 = i + HALF_ROWS;
+        const day2Content = day2 <= MAX_DAYS ? 
+            `<td class="font-bold bg-gray-50">${day2}</td><td contenteditable="true" class="numeric-cell kg-input"></td>` :
+            `<td class="bg-gray-100">-</td><td class="bg-gray-100">-</td>`; 
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `<td class="font-bold bg-gray-50">${day1}</td><td contenteditable="true" class="numeric-cell kg-input"></td>${day2Content}`;
+        tbody.appendChild(row);
+    }
+})();
+
+document.getElementById('calculateBtn').addEventListener('click', function() {
+    let totalKg = 0;
+    const rateValue = parseFloat(document.getElementById('milkRate').textContent) || 0;
+    document.getElementById('displayRate').textContent = rateValue;
+
+    const kgInputs = document.querySelectorAll('.kg-input');
+    kgInputs.forEach(input => {
+        totalKg += parseFloat(input.textContent.trim()) || 0;
+    });
+
+    const previousBalance = parseFloat(document.getElementById('previousBalance').textContent.trim()) || 0; 
+    const totalMilkAmount = totalKg * rateValue;
+
+    document.getElementById('totalMilkKg').textContent = (totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)) + ' کلو'; 
+    document.getElementById('totalCalculatedAmount').textContent = formatCurrency(totalMilkAmount); 
+    autoRecalculate();
+});
+
+document.getElementById('exportBtn').addEventListener('click', function() {
+    const ledgerElement = document.getElementById('ledgerContent');
+    const calculationBox = document.getElementById('calculationBox');
+    calculationBox.classList.add('hide-on-export');
+    
+    html2canvas(ledgerElement, { scale: 3, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'Rana_Ahmed_Bill_' + new Date().toISOString().slice(0, 10) + '.png';
+        link.href = canvas.toDataURL();
+        link.click();
+        calculationBox.classList.remove('hide-on-export');
+    });
+});
+
+const now = new Date();
+document.getElementById("issueDateTime").innerText = "Issued: " + now.toLocaleString('en-GB');
+
+(function generateInvoiceNumber() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const key = `invoice_serial_${year}_${month}`;
+    let serial = localStorage.getItem(key) || 100;
+    serial = parseInt(serial) + 1;
+    localStorage.setItem(key, serial);
+    document.getElementById('invoiceNumber').innerText = `RAM-${month}${year}-${serial}`;
+})();
+</script>
 </body>
 </html>
