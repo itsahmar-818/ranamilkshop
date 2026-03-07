@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Rana Ahmad Milk Shop | خالص دودھ — Premium Dairy</title>
-<link rel="icon" type="image/png" href="https://files.catbox.moe/6g2v8j.png">
+<link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600&family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -17,6 +17,7 @@
 :root {
   --cream:#fdfaf3; --cream2:#f5ede0; --choc:#2c1a0e; --choc2:#4a2c14;
   --gold:#b8882a; --gold2:#d4a843; --gold3:#f0d080; --white:#ffffff;
+  --maroon:#7c2d12;
 }
 
 /* ─── BASE ─── */
@@ -29,35 +30,122 @@ body {
 .urdu { font-family:'Noto Nastaliq Urdu',serif; line-height:2; }
 .display { font-family:'Playfair Display',serif; }
 
-/* ─── SPLASH ─── */
+/* ════════════════════════════════════════
+   FEATURE 3: PREMIUM SPLASH SCREEN
+════════════════════════════════════════ */
 #splash {
-  position:fixed; inset:0; z-index:9999; background:var(--choc);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
-  transition:opacity .8s ease,visibility .8s ease;
+  position:fixed; inset:0; z-index:9999;
+  background: radial-gradient(ellipse at center, #9a3515 0%, var(--maroon) 45%, #4a1508 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;
+  transition:opacity 0.9s cubic-bezier(0.4,0,0.2,1), visibility 0.9s ease;
+  overflow:hidden;
 }
-#splash.out { opacity:0; visibility:hidden; }
-.s-logo {
-  width:80px; height:80px; border-radius:22px;
-  background:linear-gradient(135deg,var(--gold) 0%,var(--gold3) 100%);
+
+/* Subtle background texture rings */
+#splash::before {
+  content:'';
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(212,168,67,0.07) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(212,168,67,0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(212,168,67,0.04) 0%, transparent 40%);
+}
+
+#splash.out { opacity:0; visibility:hidden; pointer-events:none; }
+
+/* Decorative ring behind logo */
+.splash-ring {
+  position:relative;
+  width:160px; height:160px;
   display:flex; align-items:center; justify-content:center;
-  font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:800; color:var(--choc);
-  box-shadow:0 0 60px rgba(180,136,42,.5);
-  animation:splashPop .6s cubic-bezier(.34,1.56,.64,1) forwards;
+  animation: splashRingPop 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
 }
-.s-name {
+.splash-ring::before, .splash-ring::after {
+  content:'';
+  position:absolute; border-radius:50%;
+  border:1px solid rgba(212,168,67,0.25);
+  animation: splashRippleOut 3s ease-out infinite;
+}
+.splash-ring::before { width:160px; height:160px; animation-delay:0s; }
+.splash-ring::after  { width:200px; height:200px; animation-delay:0.8s; }
+
+.splash-logo-circle {
+  width:110px; height:110px; border-radius:50%;
+  background:linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  border:1.5px solid rgba(212,168,67,0.4);
+  backdrop-filter:blur(4px);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:
+    0 0 40px rgba(212,168,67,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+  animation: splashLogoPulse 2.5s ease-in-out infinite;
+}
+.splash-logo-circle img {
+  width:70px; height:70px;
+  object-fit:contain;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+}
+
+.splash-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.2rem,5vw,1.7rem);
+  font-weight:700;
+  color:var(--gold3);
+  letter-spacing:0.04em;
+  text-align:center;
+  padding:0 24px;
+  animation: splashFadeUp 0.6s 0.3s cubic-bezier(0.4,0,0.2,1) both;
+  text-shadow:0 2px 20px rgba(212,168,67,0.3);
+}
+.splash-subtitle {
   font-family:'Noto Nastaliq Urdu',serif;
-  font-size:clamp(.95rem,4vw,1.3rem); color:var(--gold3);
-  animation:fadePulse 2s ease-in-out infinite; text-align:center; padding:0 20px;
+  font-size:clamp(0.8rem,3vw,1rem);
+  color:rgba(240,208,128,0.55);
+  text-align:center;
+  padding:0 24px;
+  animation: splashFadeUp 0.6s 0.5s cubic-bezier(0.4,0,0.2,1) both;
 }
-.s-bar-wrap { width:min(200px,60vw); height:2px; background:rgba(255,255,255,.12); border-radius:2px; overflow:hidden; }
-.s-bar {
+
+/* Progress bar */
+.splash-progress-wrap {
+  width:min(180px, 55vw); height:2px;
+  background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden;
+  animation: splashFadeUp 0.4s 0.6s ease both;
+}
+.splash-progress {
   height:100%; border-radius:2px;
-  background:linear-gradient(90deg,var(--gold),var(--gold3),var(--gold)); background-size:200% 100%;
-  animation:gmailBar 2.6s linear forwards;
+  background:linear-gradient(90deg, var(--gold), var(--gold3), var(--gold));
+  background-size:200% 100%;
+  animation: splashBar 2.3s linear forwards, shimmerProgress 1.5s linear infinite;
 }
-@keyframes splashPop { from{transform:scale(.4);opacity:0} to{transform:scale(1);opacity:1} }
-@keyframes fadePulse { 0%,100%{opacity:1}50%{opacity:.4} }
-@keyframes gmailBar { 0%{width:0}60%{width:70%}90%{width:90%}100%{width:100%} }
+
+/* Keyframes */
+@keyframes splashRingPop {
+  from { transform:scale(0.3); opacity:0; }
+  to   { transform:scale(1); opacity:1; }
+}
+@keyframes splashRippleOut {
+  0%   { transform:scale(0.85); opacity:0.6; }
+  100% { transform:scale(1.6);  opacity:0; }
+}
+@keyframes splashLogoPulse {
+  0%,100% { box-shadow:0 0 40px rgba(212,168,67,0.25), inset 0 1px 0 rgba(255,255,255,0.15); transform:scale(1); }
+  50%      { box-shadow:0 0 70px rgba(212,168,67,0.45), inset 0 1px 0 rgba(255,255,255,0.15); transform:scale(1.04); }
+}
+@keyframes splashFadeUp {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes splashBar {
+  0%  { width:0; }
+  60% { width:65%; }
+  90% { width:90%; }
+  100%{ width:100%; }
+}
+@keyframes shimmerProgress {
+  0%   { background-position:0% 0%; }
+  100% { background-position:200% 0%; }
+}
 
 /* ─── NAVBAR ─── */
 #navbar {
@@ -69,13 +157,25 @@ body {
   background:rgba(253,250,243,.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
   box-shadow:0 1px 40px rgba(44,26,14,.08); border-bottom:1px solid rgba(184,136,42,.2);
 }
+
+/* ════════════════════════════════════════
+   FEATURE 1: LOGO FIX — NAVBAR
+════════════════════════════════════════ */
 .nav-logo-box {
-  width:42px; height:42px; min-width:42px; min-height:42px; border-radius:12px;
-  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  width:45px; height:45px; min-width:45px; min-height:45px;
+  border-radius:12px;
   display:flex; align-items:center; justify-content:center;
-  font-family:'Playfair Display',serif; font-size:1rem; font-weight:800; color:var(--choc);
-  box-shadow:0 4px 16px rgba(184,136,42,.35); flex-shrink:0;
+  flex-shrink:0; overflow:hidden;
+  background:linear-gradient(135deg, rgba(184,136,42,0.15), rgba(212,168,67,0.08));
+  border:1.5px solid rgba(184,136,42,0.3);
 }
+/* The img tag inside nav-logo-box */
+.nav-logo-box img {
+  width:100%; height:45px;
+  object-fit:contain;
+  display:block;
+}
+
 .nav-brand { font-family:'Playfair Display',serif; font-size:clamp(.75rem,2.5vw,1rem); color:var(--white); font-weight:700; transition:color .3s; }
 #navbar.scrolled .nav-brand { color:var(--choc); }
 .nav-links { display:flex; align-items:center; gap:24px; }
@@ -127,18 +227,55 @@ body {
   display:flex !important; align-items:center; justify-content:center; gap:10px; margin-top:8px;
 }
 
-/* ─── FLOAT WHATSAPP ─── */
+/* ════════════════════════════════════════
+   FEATURE 4: FLOATING WHATSAPP BUTTON
+════════════════════════════════════════ */
 .float-order {
   position:fixed; bottom:24px; right:24px; z-index:200;
   background:linear-gradient(135deg,#25D366,#128C7E);
-  width:60px; height:60px; border-radius:50%;
+  width:62px; height:62px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
-  box-shadow:0 8px 32px rgba(37,211,102,.5); text-decoration:none;
-  animation:floatBtn 3s ease-in-out infinite; -webkit-tap-highlight-color:transparent;
+  box-shadow:0 8px 32px rgba(37,211,102,.5), 0 0 0 0 rgba(37,211,102,0.4);
+  text-decoration:none;
+  animation:floatBtnBob 3s ease-in-out infinite, floatBtnPing 2.5s ease-out 3.5s infinite;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
 }
-.float-order:hover,.float-order:focus { animation:none; transform:scale(1.12); }
-.float-order svg { width:28px; height:28px; fill:white; }
-@keyframes floatBtn { 0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)} }
+.float-order:hover,.float-order:focus {
+  animation:none;
+  transform:scale(1.14) translateY(-2px);
+  box-shadow:0 16px 48px rgba(37,211,102,.6);
+}
+.float-order svg { width:30px; height:30px; fill:white; }
+
+/* Tooltip label on float button */
+.float-order::before {
+  content: 'آرڈر کریں';
+  font-family:'Noto Nastaliq Urdu',serif;
+  position:absolute;
+  right:calc(100% + 10px);
+  background:var(--choc);
+  color:var(--gold3);
+  font-size:0.72rem;
+  white-space:nowrap;
+  padding:6px 12px;
+  border-radius:8px;
+  border:1px solid rgba(184,136,42,0.3);
+  opacity:0;
+  transform:translateX(6px);
+  transition:opacity 0.25s, transform 0.25s;
+  pointer-events:none;
+}
+.float-order:hover::before {
+  opacity:1; transform:translateX(0);
+}
+
+@keyframes floatBtnBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+@keyframes floatBtnPing {
+  0%   { box-shadow:0 8px 32px rgba(37,211,102,.5), 0 0 0 0 rgba(37,211,102,0.5); }
+  70%  { box-shadow:0 8px 32px rgba(37,211,102,.5), 0 0 0 18px rgba(37,211,102,0); }
+  100% { box-shadow:0 8px 32px rgba(37,211,102,.5), 0 0 0 0 rgba(37,211,102,0); }
+}
 
 /* ─── HERO ─── */
 .hero {
@@ -220,6 +357,26 @@ body {
 .card-unit { font-size:.72rem; color:#9a7a5a; font-weight:500; }
 .card-badge { position:absolute; top:16px; left:16px; background:linear-gradient(135deg,var(--gold),var(--gold2)); color:var(--choc); padding:3px 10px; border-radius:999px; font-size:.62rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
 
+/* ════════════════════════════════════════
+   FEATURE 2: PRODUCT WHATSAPP BUTTON
+════════════════════════════════════════ */
+.card-wa-btn {
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  margin-top:16px;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff; padding:11px 14px;
+  border-radius:10px; font-size:.78rem; font-weight:600;
+  text-decoration:none; border:none; cursor:pointer; width:100%;
+  box-shadow:0 4px 16px rgba(37,211,102,.25);
+  transition:transform .2s, box-shadow .2s;
+  min-height:44px;
+  font-family:'Noto Nastaliq Urdu',serif;
+  -webkit-tap-highlight-color:transparent;
+  position:relative; z-index:1;
+}
+.card-wa-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(37,211,102,.4); }
+.card-wa-btn svg { width:16px; height:16px; fill:white; flex-shrink:0; }
+
 /* ─── GLASS SECTION ─── */
 .glass-section { background:linear-gradient(160deg,var(--choc) 0%,#2a1508 100%); position:relative; overflow:hidden; }
 .glass-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
@@ -243,11 +400,11 @@ footer { background:var(--choc); border-top:1px solid rgba(184,136,42,.2); }
 .footer-logo { width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,var(--gold),var(--gold3)); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:800; color:var(--choc); margin:0 auto 12px; }
 .gold-divider { width:60px; height:3px; margin:0 auto 20px; background:linear-gradient(90deg,transparent,var(--gold),transparent); border-radius:999px; }
 
-/* ─── TABLE SCROLL WRAPPER (for billing tables) ─── */
+/* ─── TABLE SCROLL WRAPPER ─── */
 .table-scroll-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:12px; }
 .table-scroll-wrap table { min-width:480px; }
 
-/* ─── BUTTON ACTION GROUP (Calculate / Save / Download) ─── */
+/* ─── BUTTON ACTION GROUP ─── */
 .btn-action-group { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
 
 /* ─── TOUCH TARGETS ─── */
@@ -280,32 +437,20 @@ input, select, textarea { -webkit-tap-highlight-color:rgba(184,136,42,.15); }
 
 /* MOBILE  ≤ 768px */
 @media (max-width:768px) {
-  /* Navbar */
   #navbar { padding:12px 16px; }
   .nav-links { display:none !important; }
   .mobile-menu-btn { display:flex; }
-
-  /* Hero */
   .hero-visual { display:none; }
   .hero-content { padding:100px 20px 60px; text-align:center; }
   .hero-content > div { margin:0 auto !important; max-width:100% !important; }
   .hero-btns { justify-content:center; flex-direction:column; align-items:center; }
   .btn-primary, .btn-ghost { width:100%; max-width:320px; justify-content:center; padding:16px 24px; font-size:.95rem; }
-
-  /* Stats */
   .stats-inner { grid-template-columns:repeat(2,1fr); gap:10px; }
-
-  /* Cards */
   .price-grid { grid-template-columns:1fr; }
   .glass-grid { grid-template-columns:repeat(2,1fr); }
-
-  /* Contact */
   .contact-grid { grid-template-columns:1fr; }
-
-  /* Floating button */
   .float-order { bottom:18px; right:18px; width:54px; height:54px; }
-
-  /* Sections */
+  .float-order::before { display:none; }
   #rates, #why, #contact { padding:60px 16px !important; }
   footer { padding:36px 16px !important; }
 }
@@ -321,41 +466,30 @@ input, select, textarea { -webkit-tap-highlight-color:rgba(184,136,42,.15); }
 /* SMALL PHONES  ≤ 480px */
 @media (max-width:480px) {
   #navbar { padding:10px 14px; }
-  .nav-logo-box { width:38px; height:38px; min-width:38px; min-height:38px; font-size:.9rem; border-radius:10px; }
+  .nav-logo-box { width:38px; height:38px; min-width:38px; min-height:38px; border-radius:10px; }
+  .nav-logo-box img { height:38px; }
   .nav-brand { font-size:.68rem; }
   #nav-sub { display:none; }
-
   .hero-content { padding:88px 16px 50px; }
   .hero-title { font-size:clamp(2rem,9vw,2.8rem); }
   .hero-urdu { font-size:clamp(.85rem,3.5vw,1.1rem); }
   .hero-badge { font-size:.65rem; padding:5px 12px; }
-
   .stats-inner { gap:8px; }
   .stat-num { font-size:1.5rem; }
-
   .price-card { padding:20px 16px; }
   .card-icon { width:48px; height:48px; font-size:1.4rem; }
   .card-title { font-size:1rem; }
   .card-price { font-size:1.4rem; }
-
   .glass-grid { grid-template-columns:1fr; }
   .glass-card { padding:22px 16px; }
-
   .contact-card { padding:18px 16px; }
   .contact-phone { font-size:1.2rem; }
-
-  /* Prevent iOS input zoom */
   input, select, textarea { font-size:16px !important; min-height:44px; }
   [contenteditable="true"] { font-size:16px !important; min-height:44px; }
-
-  /* Table scroll on tiny screens */
   table { font-size:.76rem; }
   td, th { padding:8px 6px !important; }
-
-  /* Stack action buttons vertically */
   .btn-action-group { flex-direction:column; align-items:stretch; }
   .btn-action-group > * { width:100%; min-height:50px; justify-content:center; text-align:center; }
-
   #rates, #why, #contact { padding:50px 14px !important; }
   footer { padding:30px 14px !important; }
   .stats-strip { padding:20px 14px; }
@@ -364,12 +498,18 @@ input, select, textarea { -webkit-tap-highlight-color:rgba(184,136,42,.15); }
 </head>
 <body>
 
-<!-- ═══════════ SPLASH ═══════════ -->
+<!-- ═══════════ FEATURE 3: PREMIUM SPLASH SCREEN ═══════════ -->
 <div id="splash">
-  <div class="s-logo">RA</div>
-  <div style="font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(240,208,128,.5);letter-spacing:.15em;text-transform:uppercase;margin-top:-8px;">Premium Dairy</div>
-  <div class="s-name">رانا احمد ملک شاپ</div>
-  <div class="s-bar-wrap"><div class="s-bar"></div></div>
+  <div class="splash-ring">
+    <div class="splash-logo-circle">
+      <img src="logo.png" alt="Rana Ahmad Milk Shop Logo">
+    </div>
+  </div>
+  <div class="splash-title">Rana Ahmad Milk Shop</div>
+  <div class="splash-subtitle">خالص دودھ — Premium Dairy Since 1970</div>
+  <div class="splash-progress-wrap">
+    <div class="splash-progress"></div>
+  </div>
 </div>
 
 <!-- ═══════════ MOBILE NAV DRAWER ═══════════ -->
@@ -384,18 +524,21 @@ input, select, textarea { -webkit-tap-highlight-color:rgba(184,136,42,.15); }
   </a>
 </div>
 
-<!-- ═══════════ FLOATING WHATSAPP ═══════════ -->
-<a href="https://wa.me/923236717478" target="_blank" class="float-order" aria-label="Order on WhatsApp">
+<!-- ═══════════ FEATURE 4: FLOATING WHATSAPP BUTTON ═══════════ -->
+<a href="https://wa.me/923236717478" target="_blank" rel="noopener noreferrer" class="float-order" aria-label="Order on WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92c0 1.85.49 3.62 1.42 5.18L2.09 22.07l5.06-1.47c1.52.86 3.18 1.31 4.89 1.31C17.5 21.91 21.96 17.45 21.96 11.99 21.96 6.53 17.5 2 12.04 2zm5.25 14.32c-.27.41-1.64 1.15-1.94 1.25-.3.1-.49.15-1.07-.14-.58-.29-2.26-.85-4.2-2.41-1.5-1.25-2.52-2.67-2.82-3.16-.3-.49-.89-1.26-.57-1.56.28-.3.58-.36.87-.38.24-.02.48-.05.7.38.24.43.9 2.04.97 2.18.07.14.14.3.04.53-.1.23-.19.3-.39.54-.2.23-.43.47-.29.78.23.31.73 1.14 1.59 1.88.87.74 1.54.97 1.79 1.09.25.13.53.05.73-.09.24-.16.99-.56 1.26-.93.27-.37.51-.5.76-.6.25-.1 2.63.9 3.06 1.55.44.64.44.59-.18.67z"/></svg>
 </a>
 
 <!-- ═══════════ NAVBAR ═══════════ -->
 <nav id="navbar">
+  <!-- FEATURE 1: Logo with <img> tag, height 45px, object-fit:contain -->
   <div style="display:flex;align-items:center;gap:10px;">
-    <div class="nav-logo-box">RA</div>
+    <div class="nav-logo-box">
+      <img src="logo.png" alt="Rana Ahmad Milk Shop" height="45" style="height:45px;object-fit:contain;">
+    </div>
     <div>
       <div class="nav-brand">Rana Ahmad Milk Shop</div>
-      <div style="font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,208,128,.45);line-height:1;margin-top:1px;" id="nav-sub">Premium Dairy • Since 1995</div>
+      <div style="font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,208,128,.45);line-height:1;margin-top:1px;" id="nav-sub">Premium Dairy • Since 1970</div>
     </div>
   </div>
   <div class="nav-links">
@@ -458,32 +601,77 @@ input, select, textarea { -webkit-tap-highlight-color:rgba(184,136,42,.15); }
       <h2 class="display" style="font-size:clamp(1.7rem,5vw,3rem);color:var(--choc);margin-bottom:12px;">Today's Fresh Rates</h2>
       <p class="urdu" style="color:#7a5c40;font-size:clamp(.8rem,2.5vw,.95rem);">تمام مصنوعات 100% خالص اور معیاری — بلک آرڈر پر خصوصی رعایت</p>
     </div>
+
+    <!-- FEATURE 2: Product cards with dynamic WhatsApp order buttons -->
     <div class="price-grid">
+
+      <!-- Card 1: تازہ خالص دودھ -->
       <div class="price-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="card-glow"></div><div class="card-badge">آج کا ریٹ</div>
-        <div class="card-icon">🥛</div><div class="card-title">تازہ خالص دودھ</div>
+        <div class="card-glow"></div>
+        <div class="card-badge">آج کا ریٹ</div>
+        <div class="card-icon">🥛</div>
+        <div class="card-title">تازہ خالص دودھ</div>
         <div class="card-desc">گائے / بھینس — روزانہ صبح تازہ فارم سے</div>
-        <div class="card-price">PKR 200</div><div class="card-unit">فی لیٹر / کلو</div>
+        <div class="card-price">PKR 200</div>
+        <div class="card-unit">فی لیٹر / کلو</div>
+        <a class="card-wa-btn"
+           href="https://wa.me/923236717478?text=Hello%20Rana%20Ahmad%20Milk%20Shop%2C%20I%20want%20to%20order%20%D8%AA%D8%A7%D8%B2%DB%81%20%D8%AE%D8%A7%D9%84%D8%B5%20%D8%AF%D9%88%D8%AF%DA%BE"
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92c0 1.85.49 3.62 1.42 5.18L2.09 22.07l5.06-1.47c1.52.86 3.18 1.31 4.89 1.31C17.5 21.91 21.96 17.45 21.96 11.99 21.96 6.53 17.5 2 12.04 2z"/></svg>
+          آرڈر کریں
+        </a>
       </div>
+
+      <!-- Card 2: خالص دیسی گھی -->
       <div class="price-card" data-aos="fade-up" data-aos-delay="100">
         <div class="card-glow"></div>
-        <div class="card-icon">🧈</div><div class="card-title">خالص دیسی گھی</div>
+        <div class="card-icon">🧈</div>
+        <div class="card-title">خالص دیسی گھی</div>
         <div class="card-desc">روایتی بلائی ہوا — خوشبودار اور اعلیٰ معیار</div>
-        <div class="card-price">PKR 3,000</div><div class="card-unit">فی کلو</div>
+        <div class="card-price">PKR 2,950</div>
+        <div class="card-unit">فی کلو</div>
+        <a class="card-wa-btn"
+           href="https://wa.me/923236717478?text=Hello%20Rana%20Ahmad%20Milk%20Shop%2C%20I%20want%20to%20order%20%D8%AE%D8%A7%D9%84%D8%B5%20%D8%AF%DB%8C%D8%B3%DB%8C%20%DA%AF%DA%BE%DB%8C"
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92c0 1.85.49 3.62 1.42 5.18L2.09 22.07l5.06-1.47c1.52.86 3.18 1.31 4.89 1.31C17.5 21.91 21.96 17.45 21.96 11.99 21.96 6.53 17.5 2 12.04 2z"/></svg>
+          آرڈر کریں
+        </a>
       </div>
+
+      <!-- Card 3: قدرتی دہی -->
       <div class="price-card" data-aos="fade-up" data-aos-delay="200">
         <div class="card-glow"></div>
-        <div class="card-icon">🥄</div><div class="card-title">قدرتی دہی</div>
+        <div class="card-icon">🥄</div>
+        <div class="card-title">قدرتی دہی</div>
         <div class="card-desc">گاڑھا، کریمی اور بغیر کسی ملاوٹ کے</div>
-        <div class="card-price">PKR 220</div><div class="card-unit">فی کلو</div>
+        <div class="card-price">PKR 220</div>
+        <div class="card-unit">فی کلو</div>
+        <a class="card-wa-btn"
+           href="https://wa.me/923236717478?text=Hello%20Rana%20Ahmad%20Milk%20Shop%2C%20I%20want%20to%20order%20%D9%82%D8%AF%D8%B1%D8%AA%DB%8C%20%D8%AF%DB%81%DB%8C"
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92c0 1.85.49 3.62 1.42 5.18L2.09 22.07l5.06-1.47c1.52.86 3.18 1.31 4.89 1.31C17.5 21.91 21.96 17.45 21.96 11.99 21.96 6.53 17.5 2 12.04 2z"/></svg>
+          آرڈر کریں
+        </a>
       </div>
+
+      <!-- Card 4: تازہ کریم -->
       <div class="price-card" data-aos="fade-up" data-aos-delay="300">
         <div class="card-glow"></div>
-        <div class="card-icon">🍮</div><div class="card-title">تازہ کریم</div>
+        <div class="card-icon">🍮</div>
+        <div class="card-title">تازہ کریم</div>
         <div class="card-desc">خصوصی آرڈر پر — شادی و تقریب کے لیے</div>
-        <div class="card-price">PKR 1,500</div><div class="card-unit">فی کلو</div>
+        <div class="card-price">PKR 1,500</div>
+        <div class="card-unit">فی کلو</div>
+        <a class="card-wa-btn"
+           href="https://wa.me/923236717478?text=Hello%20Rana%20Ahmad%20Milk%20Shop%2C%20I%20want%20to%20order%20%D8%AA%D8%A7%D8%B2%DB%81%20%DA%A9%D8%B1%DB%8C%D9%85"
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92c0 1.85.49 3.62 1.42 5.18L2.09 22.07l5.06-1.47c1.52.86 3.18 1.31 4.89 1.31C17.5 21.91 21.96 17.45 21.96 11.99 21.96 6.53 17.5 2 12.04 2z"/></svg>
+          آرڈر کریں
+        </a>
       </div>
+
     </div>
+
     <div data-aos="fade-up" style="margin-top:28px;text-align:center;padding:16px 20px;background:rgba(184,136,42,.08);border:1px dashed rgba(184,136,42,.3);border-radius:14px;">
       <p class="urdu" style="color:var(--gold);font-size:clamp(.75rem,2.5vw,.85rem);">نوٹ: ریٹس مارکیٹ کے مطابق تبدیل ہو سکتے ہیں۔ تازہ قیمت اور بلک آرڈر کے لیے واٹس ایپ کریں۔</p>
     </div>
@@ -565,7 +753,7 @@ input, select, textarea { -webkit-tap-highlight-color:rgba(184,136,42,.15); }
 
 <!-- ═══════════ FOOTER ═══════════ -->
 <footer style="padding:48px 20px;text-align:center;">
-  <div class="footer-logo">RA</div>
+  <div class="footer-logo"><img src="logo.png" alt=""></div>
   <div class="display" style="font-size:clamp(.9rem,3vw,1.1rem);color:var(--gold3);margin-bottom:4px;">Rana Ahmad Milk Shop™</div>
   <div class="urdu" style="font-size:clamp(.7rem,2vw,.75rem);color:rgba(240,208,128,.4);margin-bottom:20px;">خالص معیار — جدید سٹینڈرڈز — خاندانی اعتبار</div>
   <div class="gold-divider"></div>
@@ -573,13 +761,13 @@ input, select, textarea { -webkit-tap-highlight-color:rgba(184,136,42,.15); }
 </footer>
 
 <script>
-// ─── Splash ───
+// ─── FEATURE 3: Splash fade-out after 2.5s ───
 window.addEventListener('load', () => {
   setTimeout(() => {
     const s = document.getElementById('splash');
     s.classList.add('out');
     s.addEventListener('transitionend', () => s.remove(), { once: true });
-  }, 3200);
+  }, 2500); // 2.5 seconds as requested
 });
 
 // ─── Navbar scroll ───
@@ -634,4 +822,3 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 </body>
 </html>
-
