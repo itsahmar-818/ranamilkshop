@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Bill — Rana Ahmad Milk Shop</title>
+<meta name="description" content="Check and download your monthly milk bill from Rana Ahmad Milk Shop, Multan. Enter your mobile number.">
+<link rel="canonical" href="https://ranaahmadmilk.shop/bill/">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#173F6E">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Manrope:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F9FA; --surface:#FFFFFF; --soft:#EAF2F7; --navy:#173F6E; --sky:#8CC8E4; --gold:#C4952C; --wa:#1E8E4E;
+  --ink:#10233D; --muted:#5A6B80; --line:rgba(23,63,110,.12); --on-navy:#FFFFFF; --bad:#B42318;
+  --display:"Fraunces", Georgia, serif;
+  --sans:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --urdu:"Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif;
+  --ease:cubic-bezier(.22,.8,.2,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1A2C; --surface:#12243B; --soft:#16304D; --navy:#9CCBEA; --sky:#5FA9CF; --gold:#E0B557;
+  --ink:#EDF3F8; --muted:#9FB0C3; --line:rgba(156,203,234,.16); --on-navy:#0C1A2C; --bad:#F97066;}}
+:root[data-theme="dark"]{
+  --bg:#0C1A2C; --surface:#12243B; --soft:#16304D; --navy:#9CCBEA; --sky:#5FA9CF; --gold:#E0B557;
+  --ink:#EDF3F8; --muted:#9FB0C3; --line:rgba(156,203,234,.16); --on-navy:#0C1A2C; --bad:#F97066;}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg); color:var(--ink); font:400 16px/1.6 var(--sans); -webkit-font-smoothing:antialiased; min-height:100vh; display:flex; flex-direction:column}
+html[lang="ur"] body{font-family:var(--urdu); line-height:2.1}
+html[lang="ur"] .num, html[lang="ur"] input{font-family:var(--sans)}
+a{color:inherit}
+.wrap{width:min(1080px,100% - 32px); margin-inline:auto}
+
+/* top bar */
+.top{padding:18px 0; border-bottom:1px solid var(--line); background:var(--surface)}
+.top .wrap{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.brand{display:flex; align-items:center; gap:12px; text-decoration:none}
+.brand img{width:42px; height:42px; border-radius:50%}
+.brand b{display:block; font-weight:700; font-size:15px; letter-spacing:-.01em; line-height:1.2}
+.brand small{display:block; color:var(--muted); font-size:12px; font-weight:500}
+html[lang="ur"] .brand b{font-size:15px}
+.top-r{display:flex; gap:8px; align-items:center}
+.chip{border:1px solid var(--line); background:transparent; color:var(--ink); border-radius:999px; padding:8px 14px; font:600 13px/1 var(--sans); cursor:pointer; text-decoration:none; white-space:nowrap}
+.chip:hover{background:var(--soft)}
+.chip .u{font-family:var(--urdu); font-weight:600}
+
+/* hero */
+.hero{padding:clamp(40px,8vw,88px) 0 28px}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; color:var(--gold); font:700 12px/1 var(--sans); letter-spacing:.14em; text-transform:uppercase}
+html[lang="ur"] .eyebrow{font-family:var(--urdu); letter-spacing:0; font-size:14px; text-transform:none}
+.eyebrow::before{content:""; width:22px; height:1px; background:currentColor}
+h1{font:400 clamp(34px,6vw,58px)/1.05 var(--display); letter-spacing:-.025em; margin:14px 0 12px; color:var(--navy)}
+html[lang="ur"] h1{font:600 clamp(30px,5vw,46px)/1.9 var(--urdu); letter-spacing:0}
+.sub{color:var(--muted); max-width:52ch; margin:0}
+
+/* search card */
+.card{background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:clamp(18px,3vw,28px); box-shadow:0 1px 0 rgba(16,35,61,.03), 0 18px 50px -30px rgba(16,35,61,.35)}
+.search{margin-top:28px; max-width:620px}
+.search label{display:block; font-weight:700; font-size:14px; margin-bottom:10px}
+.row{display:flex; gap:10px}
+.field{flex:1; display:flex; align-items:center; border:1.5px solid var(--line); border-radius:14px; background:var(--bg); transition:border-color .2s var(--ease), box-shadow .2s var(--ease)}
+.field:focus-within{border-color:var(--navy); box-shadow:0 0 0 4px color-mix(in srgb, var(--sky) 35%, transparent)}
+.field span{padding:0 0 0 14px; color:var(--muted); font:600 15px var(--sans)}
+.field input{flex:1; min-width:0; border:0; background:transparent; color:var(--ink); font:600 19px/1 var(--sans); letter-spacing:.04em; padding:15px 14px; outline:none}
+.go{border:0; border-radius:14px; background:var(--navy); color:var(--on-navy); font:700 15px/1 var(--sans); padding:0 22px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:transform .15s var(--ease), opacity .2s}
+html[lang="ur"] .go{font-family:var(--urdu); font-weight:600}
+.go:active{transform:scale(.97)}
+.go[disabled]{opacity:.6; cursor:progress}
+.hint{color:var(--muted); font-size:13px; margin:10px 2px 0}
+.msg{margin:14px 2px 0; font-weight:600; font-size:14px}
+.msg.bad{color:var(--bad)}
+@media (max-width:520px){ .row{flex-direction:column} .go{padding:15px 22px; justify-content:center} }
+
+/* spinner */
+.spin{width:16px; height:16px; border-radius:50%; border:2px solid currentColor; border-right-color:transparent; animation:r .7s linear infinite; display:none}
+.go[disabled] .spin{display:inline-block}
+@keyframes r{to{transform:rotate(360deg)}}
+
+/* results */
+.results{padding:20px 0 70px}
+.res-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:18px}
+.res-head h2{font:400 26px/1.2 var(--display); margin:0; color:var(--navy)}
+html[lang="ur"] .res-head h2{font:600 24px/2 var(--urdu)}
+.res-head p{margin:0; color:var(--muted); font-size:14px}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px}
+.bill{background:var(--surface); border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; opacity:0; transform:translateY(14px); animation:up .55s var(--ease) forwards}
+@keyframes up{to{opacity:1; transform:none}}
+.thumb{aspect-ratio:3/4; background:var(--soft); overflow:hidden; cursor:zoom-in; position:relative; border:0; padding:0; display:block; width:100%}
+.thumb img{width:100%; display:block; object-fit:cover; object-position:top; height:100%; transition:transform .5s var(--ease)}
+.bill:hover .thumb img{transform:scale(1.03)}
+.thumb .sk{position:absolute; inset:0; background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%) var(--soft); background-size:220% 100%; animation:sh 1.2s linear infinite}
+@keyframes sh{from{background-position:120% 0}to{background-position:-120% 0}}
+.meta{padding:14px 16px 16px; display:flex; flex-direction:column; gap:4px}
+.meta b{font-size:16px}
+.meta small{color:var(--muted); font-size:12.5px}
+.acts{display:flex; gap:8px; margin-top:10px}
+.acts a,.acts button{flex:1; text-align:center; border-radius:11px; padding:10px 8px; font:700 13px/1 var(--sans); text-decoration:none; cursor:pointer; border:1px solid var(--line); background:transparent; color:var(--ink)}
+.acts .dl{background:var(--navy); color:var(--on-navy); border-color:transparent}
+html[lang="ur"] .acts a, html[lang="ur"] .acts button{font-family:var(--urdu); font-weight:600}
+.empty{padding:28px; text-align:center}
+.empty p{color:var(--muted); margin:8px 0 18px}
+.wa{display:inline-flex; align-items:center; gap:8px; background:var(--wa); color:#fff; text-decoration:none; padding:12px 18px; border-radius:12px; font-weight:700}
+
+/* viewer */
+.viewer{position:fixed; inset:0; background:rgba(8,18,32,.86); display:none; align-items:flex-start; justify-content:center; overflow:auto; z-index:50; padding:64px 16px 40px; backdrop-filter:blur(4px)}
+.viewer.on{display:flex; animation:fd .25s var(--ease)}
+@keyframes fd{from{opacity:0}}
+.viewer img{max-width:min(720px,100%); width:100%; border-radius:12px; box-shadow:0 30px 80px -20px #000}
+.viewer .x{position:fixed; top:14px; right:14px; display:flex; gap:8px}
+.viewer .x button,.viewer .x a{background:#fff; color:#10233D; border:0; border-radius:999px; padding:10px 16px; font:700 14px/1 var(--sans); cursor:pointer; text-decoration:none}
+
+footer{margin-top:auto; border-top:1px solid var(--line); padding:22px 0; color:var(--muted); font-size:13px}
+footer .wrap{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important} .bill{opacity:1; transform:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/logo.png" alt=""><span><b data-t="brand">Rana Ahmad Milk Shop</b><small data-t="since">Since 1970 · Multan</small></span></a>
+    <div class="top-r">
+      <button class="chip" id="lang" type="button"><span class="u">اردو</span></button>
+      <a class="chip" href="/" data-t="home">Home</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow" data-t="eyebrow">Monthly bill</span>
+      <h1 data-t="h1">Check your milk bill</h1>
+      <p class="sub" data-t="sub">Type the mobile number that is printed on your bill. You will see every month's bill and can download it.</p>
+
+      <form class="card search" id="f" autocomplete="on" novalidate>
+        <label for="n" data-t="label">Mobile number</label>
+        <div class="row">
+          <div class="field"><input id="n" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="0300 1234567" maxlength="16" required></div>
+          <button class="go" id="go" type="submit"><i class="spin"></i><span data-t="go">Show bills</span></button>
+        </div>
+        <p class="hint" data-t="hint">Example: 0300 1234567</p>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="results" id="res" hidden>
+    <div class="wrap">
+      <div class="res-head"><h2 data-t="your">Your bills</h2><p id="count"></p></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+</main>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true">
+  <div class="x"><a id="vdl" download data-t="download">Download</a><button id="vx" type="button" data-t="close">Close</button></div>
+  <img id="vimg" alt="">
+</div>
+
+<footer>
+  <div class="wrap">
+    <span data-t="foot">Rana Ahmad Milk Shop · Ghalla Mandi, near Central Jail, Multan</span>
+    <a class="num" href="https://wa.me/923236717478">WhatsApp 0323 6717478</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+  /* ── Bill storage format (do not change without updating the uploader + RAMS app) ──
+     phone "03XXXXXXXXX" → PBKDF2-SHA256(salt, 150000) → 48 bytes
+       bytes 0..15  → folder id (hex)     /bills/<id>/i.bin  (encrypted list)
+       bytes 16..47 → AES-256-GCM key     /bills/<id>/<file>.bin (encrypted PNG)
+     each .bin = 12-byte IV + ciphertext */
+  const SALT = 'RAMS|ranaahmadmilk.shop|bills|v1';
+  const ITER = 150000;
+  const te = new TextEncoder(), td = new TextDecoder();
+  const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+
+  function normPhone(s) {
+    let d = String(s || '').replace(/\D/g, '');
+    if (d.startsWith('0092')) d = d.slice(2);
+    if (d.startsWith('92') && d.length === 12) d = '0' + d.slice(2);
+    if (d.length === 10 && d.startsWith('3')) d = '0' + d;
+    return /^03\d{9}$/.test(d) ? d : null;
+  }
+  async function derive(phone) {
+    const base = await crypto.subtle.importKey('raw', te.encode(phone), 'PBKDF2', false, ['deriveBits']);
+    const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt: te.encode(SALT), iterations: ITER, hash: 'SHA-256' }, base, 384);
+    const id = hex(bits.slice(0, 16));
+    const key = await crypto.subtle.importKey('raw', bits.slice(16, 48), 'AES-GCM', false, ['decrypt']);
+    return { id, key };
+  }
+  async function dec(key, buf) {
+    const u = new Uint8Array(buf);
+    return crypto.subtle.decrypt({ name: 'AES-GCM', iv: u.slice(0, 12) }, key, u.slice(12));
+  }
+  async function getBin(url) {
+    const r = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+    if (r.status === 404) return null;
+    if (!r.ok) throw new Error('net ' + r.status);
+    return r.arrayBuffer();
+  }
+
+  /* ── text ── */
+  const T = {
+    en: { brand: 'Rana Ahmad Milk Shop', since: 'Since 1970 · Multan', home: 'Home', eyebrow: 'Monthly bill', h1: 'Check your milk bill',
+      sub: "Type the mobile number that is printed on your bill. You will see every month's bill and can download it.",
+      label: 'Mobile number', go: 'Show bills', hint: 'Example: 0300 1234567', your: 'Your bills', download: 'Download', view: 'View', close: 'Close',
+      foot: 'Rana Ahmad Milk Shop · Ghalla Mandi, near Central Jail, Multan',
+      bad: 'Please enter a valid mobile number, like 0300 1234567.', looking: 'Looking for your bills…',
+      none: 'No bill found for this number yet.', noneSub: 'If you think this is wrong, message us on WhatsApp and we will send it.',
+      wa: 'Message on WhatsApp', err: 'Could not load bills. Check your internet and try again.', n: c => c + (c === 1 ? ' bill' : ' bills') },
+    ur: { brand: 'رانا احمد ملک شاپ', since: '1970 سے · ملتان', home: 'ہوم', eyebrow: 'ماہانہ بل', h1: 'اپنا دودھ کا بل دیکھیں',
+      sub: 'وہ موبائل نمبر لکھیں جو آپ کے بل پر چھپا ہے۔ ہر مہینے کا بل نظر آئے گا اور ڈاؤن لوڈ بھی ہو سکے گا۔',
+      label: 'موبائل نمبر', go: 'بل دکھائیں', hint: 'مثال: 0300 1234567', your: 'آپ کے بل', download: 'ڈاؤن لوڈ', view: 'دیکھیں', close: 'بند کریں',
+      foot: 'رانا احمد ملک شاپ · غلہ منڈی، نزد سنٹرل جیل، ملتان',
+      bad: 'درست موبائل نمبر لکھیں، جیسے 0300 1234567', looking: 'بل تلاش ہو رہے ہیں…',
+      none: 'اس نمبر پر ابھی کوئی بل نہیں ملا۔', noneSub: 'اگر یہ غلط لگے تو واٹس ایپ پر رابطہ کریں، ہم بل بھیج دیں گے۔',
+      wa: 'واٹس ایپ کریں', err: 'بل لوڈ نہیں ہو سکے۔ انٹرنیٹ چیک کر کے دوبارہ کوشش کریں۔', n: c => c + ' بل' }
+  };
+  const MONTHS = { en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    ur: ['جنوری','فروری','مارچ','اپریل','مئی','جون','جولائی','اگست','ستمبر','اکتوبر','نومبر','دسمبر'] };
+  let L = 'en';
+  try { L = localStorage.getItem('lang') === 'ur' ? 'ur' : 'en'; } catch (e) {}
+  const $ = id => document.getElementById(id);
+  const t = k => T[L][k];
+  function monthName(m) { const [y, mo] = (m || '').split('-'); return mo ? MONTHS[L][+mo - 1] + ' ' + y : m; }
+  function applyLang() {
+    document.documentElement.lang = L; document.documentElement.dir = L === 'ur' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(el => { const v = T[L][el.dataset.t]; if (typeof v === 'string') el.textContent = v; });
+    $('lang').innerHTML = L === 'ur' ? '<span>English</span>' : '<span class="u">اردو</span>';
+    if (last) render(last);
+  }
+  $('lang').addEventListener('click', () => { L = L === 'ur' ? 'en' : 'ur'; try { localStorage.setItem('lang', L); } catch (e) {} applyLang(); });
+
+  /* ── search ── */
+  let last = null, busy = false;
+  const urls = [];
+  function msg(s, bad) { $('msg').textContent = s || ''; $('msg').className = 'msg' + (bad ? ' bad' : ''); }
+  $('n').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^\d+\s-]/g, ''); });
+  $('f').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (busy) return;
+    const phone = normPhone($('n').value);
+    if (!phone) { msg(t('bad'), true); $('n').focus(); return; }
+    busy = true; $('go').disabled = true; msg(t('looking'));
+    try {
+      const { id, key } = await derive(phone);
+      const raw = await getBin('/bills/' + id + '/i.bin');
+      let list = [];
+      if (raw) list = JSON.parse(td.decode(await dec(key, raw))).bills || [];
+      list.sort((a, b) => (b.m || '').localeCompare(a.m || '') || (b.t || 0) - (a.t || 0));
+      last = { id, key, list, phone };
+      msg('');
+      render(last);
+      $('res').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (err) {
+      console.error(err); msg(t('err'), true);
+    } finally { busy = false; $('go').disabled = false; }
+  });
+
+  function render(st) {
+    urls.splice(0).forEach(u => URL.revokeObjectURL(u));
+    const g = $('grid'); g.innerHTML = '';
+    $('res').hidden = false;
+    $('count').textContent = st.list.length ? t('n')(st.list.length) : '';
+    if (!st.list.length) {
+      g.innerHTML = '<div class="card empty" style="grid-column:1/-1"><b>' + t('none') + '</b><p>' + t('noneSub') +
+        '</p><a class="wa" href="https://wa.me/923236717478?text=' + encodeURIComponent('Assalam o Alaikum, mujhe apna bill chahiye. Number: ' + st.phone) + '">' + t('wa') + '</a></div>';
+      return;
+    }
+    st.list.forEach((b, i) => {
+      const el = document.createElement('article');
+      el.className = 'bill'; el.style.animationDelay = Math.min(i * 60, 600) + 'ms';
+      const title = monthName(b.m);
+      el.innerHTML = '<button class="thumb" type="button" aria-label="' + t('view') + '"><div class="sk"></div></button>' +
+        '<div class="meta"><b></b><small></small><div class="acts"><button type="button" class="vw">' + t('view') + '</button><a class="dl" href="#" download>' + t('download') + '</a></div></div>';
+      el.querySelector('b').textContent = title;
+      el.querySelector('small').textContent = [b.name, b.inv].filter(Boolean).join(' · ');
+      g.appendChild(el);
+      loadImg(st, b, el, title);
+    });
+  }
+  async function loadImg(st, b, el, title) {
+    try {
+      const raw = await getBin('/bills/' + st.id + '/' + b.f);
+      if (!raw) throw new Error('missing');
+      const blob = new Blob([await dec(st.key, raw)], { type: 'image/png' });
+      const u = URL.createObjectURL(blob); urls.push(u);
+      const img = new Image(); img.alt = title; img.src = u; img.decoding = 'async';
+      const th = el.querySelector('.thumb'); th.innerHTML = ''; th.appendChild(img);
+      const name = 'RanaAhmad_Bill_' + (b.m || 'bill') + (b.name ? '_' + b.name.replace(/\s+/g, '_') : '') + '.png';
+      const dl = el.querySelector('.dl'); dl.href = u; dl.download = name;
+      const open = () => { $('vimg').src = u; $('vimg').alt = title; $('vdl').href = u; $('vdl').download = name; $('viewer').classList.add('on'); document.body.style.overflow = 'hidden'; };
+      th.onclick = open; el.querySelector('.vw').onclick = open;
+    } catch (e) {
+      el.querySelector('.thumb').innerHTML = '<div style="padding:20px;color:var(--muted);font-size:13px">' + t('err') + '</div>';
+    }
+  }
+  function closeV() { $('viewer').classList.remove('on'); document.body.style.overflow = ''; }
+  $('vx').onclick = closeV;
+  $('viewer').addEventListener('click', e => { if (e.target.id === 'viewer') closeV(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeV(); });
+  applyLang();
+})();
+</script>
+</body>
+</html>
