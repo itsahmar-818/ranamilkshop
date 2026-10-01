@@ -99,6 +99,7 @@ html[lang="ur"] .mbtn{font-family:var(--urdu); font-weight:600; line-height:1.6;
 .thumb{aspect-ratio:3/4; background:var(--soft); overflow:hidden; cursor:zoom-in; position:relative; border:0; padding:0; display:block; width:100%}
 .thumb img{width:100%; display:block; object-fit:cover; object-position:top; height:100%; transition:transform .5s var(--ease)}
 .bill:hover .thumb img{transform:scale(1.03)}
+.thumb .ld{position:absolute; left:0; right:0; top:42%; text-align:center; color:var(--muted); font-weight:700; font-size:14px; z-index:1}
 .thumb .sk{position:absolute; inset:0; background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%) var(--soft); background-size:220% 100%; animation:sh 1.2s linear infinite}
 @keyframes sh{from{background-position:120% 0}to{background-position:-120% 0}}
 .meta{padding:14px 16px 16px; display:flex; flex-direction:column; gap:4px}
@@ -220,14 +221,14 @@ footer .wrap{display:flex; justify-content:space-between; gap:12px; flex-wrap:wr
       sub: 'Type the mobile number that is printed on your bill, then choose the month to see and download that bill.',
       label: 'Mobile number', pick: 'Choose month', go: 'Show bills', hint: 'Example: 0300 1234567', your: 'Your bills', download: 'Download', view: 'View', close: 'Close',
       foot: 'Rana Ahmad Milk Shop · Ghalla Mandi, near Central Jail, Multan',
-      bad: 'Please enter a valid mobile number, like 0300 1234567.', looking: 'Looking for your bills…',
+      bad: 'Please enter a valid mobile number, like 0300 1234567.', looking: 'Looking for your bills…', opening: 'Opening bill…',
       none: 'No bill found for this number yet.', noneSub: 'If you think this is wrong, message us on WhatsApp and we will send it.',
       wa: 'Message on WhatsApp', err: 'Could not load bills. Check your internet and try again.', n: c => c + (c === 1 ? ' bill' : ' bills') },
     ur: { brand: 'رانا احمد ملک شاپ', since: '1970 سے · ملتان', home: 'ہوم', eyebrow: 'ماہانہ بل', h1: 'اپنا دودھ کا بل دیکھیں',
       sub: 'وہ موبائل نمبر لکھیں جو آپ کے بل پر چھپا ہے، پھر مہینہ چنیں — اسی مہینے کا بل نظر آئے گا اور ڈاؤن لوڈ ہو سکے گا۔',
       label: 'موبائل نمبر', pick: 'مہینہ چنیں', go: 'بل دکھائیں', hint: 'مثال: 0300 1234567', your: 'آپ کے بل', download: 'ڈاؤن لوڈ', view: 'دیکھیں', close: 'بند کریں',
       foot: 'رانا احمد ملک شاپ · غلہ منڈی، نزد سنٹرل جیل، ملتان',
-      bad: 'درست موبائل نمبر لکھیں، جیسے 0300 1234567', looking: 'بل تلاش ہو رہے ہیں…',
+      bad: 'درست موبائل نمبر لکھیں، جیسے 0300 1234567', looking: 'بل تلاش ہو رہے ہیں…', opening: 'بل کھل رہا ہے…',
       none: 'اس نمبر پر ابھی کوئی بل نہیں ملا۔', noneSub: 'اگر یہ غلط لگے تو واٹس ایپ پر رابطہ کریں، ہم بل بھیج دیں گے۔',
       wa: 'واٹس ایپ کریں', err: 'بل لوڈ نہیں ہو سکے۔ انٹرنیٹ چیک کر کے دوبارہ کوشش کریں۔', n: c => c + ' بل' }
   };
@@ -248,7 +249,16 @@ footer .wrap{display:flex; justify-content:space-between; gap:12px; flex-wrap:wr
 
   /* ── search ── */
   let last = null, busy = false;
-  const urls = [];
+  const cache = new Map();   /* file → Promise<blob url> — mahina badalne par dobara download nahi */
+  function billUrl(st, b) {
+    const k = st.id + '/' + b.f;
+    if (!cache.has(k)) cache.set(k, (async () => {
+      const raw = await getBin('/bills/' + k);
+      if (!raw) throw new Error('missing');
+      return URL.createObjectURL(new Blob([await dec(st.key, raw)], { type: 'image/png' }));
+    })().catch(e => { cache.delete(k); throw e; }));
+    return cache.get(k);
+  }
   function msg(s, bad) { $('msg').textContent = s || ''; $('msg').className = 'msg' + (bad ? ' bad' : ''); }
   $('n').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^\d+\s-]/g, ''); });
   $('f').addEventListener('submit', async e => {
@@ -273,7 +283,6 @@ footer .wrap{display:flex; justify-content:space-between; gap:12px; flex-wrap:wr
   });
 
   function render(st) {
-    urls.splice(0).forEach(u => URL.revokeObjectURL(u));
     const g = $('grid'); g.innerHTML = '';
     const mb = $('months'); mb.innerHTML = '';
     $('res').hidden = false;
@@ -291,27 +300,27 @@ footer .wrap{display:flex; justify-content:space-between; gap:12px; flex-wrap:wr
       const btn = document.createElement('button');
       btn.type = 'button'; btn.className = 'mbtn'; btn.textContent = monthName(m);
       btn.setAttribute('aria-pressed', m === st.month ? 'true' : 'false');
-      btn.onclick = () => { st.month = m; render(st); };
+      btn.onclick = () => { if (st.month === m) return; st.month = m; render(st); };
       mb.appendChild(btn);
     });
     st.list.filter(b => b.m === st.month).forEach((b, i) => {
       const el = document.createElement('article');
       el.className = 'bill'; el.style.animationDelay = Math.min(i * 60, 600) + 'ms';
       const title = monthName(b.m);
-      el.innerHTML = '<button class="thumb" type="button" aria-label="' + t('view') + '"><div class="sk"></div></button>' +
+      el.innerHTML = '<button class="thumb" type="button" aria-label="' + t('view') + '"><div class="sk"></div><span class="ld">' + t('opening') + '</span></button>' +
         '<div class="meta"><b></b><small></small><div class="acts"><button type="button" class="vw">' + t('view') + '</button><a class="dl" href="#" download>' + t('download') + '</a></div></div>';
       el.querySelector('b').textContent = title;
       el.querySelector('small').textContent = [b.name, b.inv].filter(Boolean).join(' · ');
       g.appendChild(el);
       loadImg(st, b, el, title);
     });
+    /* baqi mahine pichhe se tayyar — button dabate hi foran khulein */
+    setTimeout(() => st.list.forEach(b => billUrl(st, b).catch(() => {})), 300);
   }
   async function loadImg(st, b, el, title) {
     try {
-      const raw = await getBin('/bills/' + st.id + '/' + b.f);
-      if (!raw) throw new Error('missing');
-      const blob = new Blob([await dec(st.key, raw)], { type: 'image/png' });
-      const u = URL.createObjectURL(blob); urls.push(u);
+      const u = await billUrl(st, b);
+      if (!el.isConnected) return;
       const img = new Image(); img.alt = title; img.src = u; img.decoding = 'async';
       const th = el.querySelector('.thumb'); th.innerHTML = ''; th.appendChild(img);
       const name = 'RanaAhmad_Bill_' + (b.m || 'bill') + (b.name ? '_' + b.name.replace(/\s+/g, '_') : '') + '.png';
