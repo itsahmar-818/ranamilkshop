@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /bills/
+Disallow: /backup/
 
 Sitemap: https://ranaahmadmilk.shop/sitemap.xml
