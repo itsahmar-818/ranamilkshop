@@ -17,7 +17,7 @@
     nameUr: 'رانا احمد ملک شاپ',
     nameRo: 'Rana Ahmad Milk Shop',
     whatsapp: '923261970055',                 // order isi number par jayega (92 ke saath, + ke baghair)
-    phones: ['0326 1970055', '0323 6717478'],
+    phones: ['0323 6717478'],                // call sirf is number par (0326 sirf WhatsApp AI)
     mapsUrl: 'https://www.google.com/maps/search/?api=1&query=5F8C%2BQFJ%20Multan',
     hours: [[5, 11], [17, 23]],               // subah 5-11, shaam 5-11 (Pakistan time)
     defaultLang: 'ur',                        // 'ur' = Urdu, 'ro' = Roman Urdu
