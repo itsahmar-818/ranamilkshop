@@ -16,8 +16,8 @@
   var CONFIG = {
     nameUr: 'رانا احمد ملک شاپ',
     nameRo: 'Rana Ahmad Milk Shop',
-    whatsapp: '923236717478',                 // order isi number par jayega (92 ke saath, + ke baghair)
-    phones: ['0323 6717478', '0300 7198213'],
+    whatsapp: '923261970055',                 // order isi number par jayega (92 ke saath, + ke baghair)
+    phones: ['0326 1970055', '0323 6717478'],
     mapsUrl: 'https://www.google.com/maps/search/?api=1&query=5F8C%2BQFJ%20Multan',
     hours: [[5, 11], [17, 23]],               // subah 5-11, shaam 5-11 (Pakistan time)
     defaultLang: 'ur',                        // 'ur' = Urdu, 'ro' = Roman Urdu
