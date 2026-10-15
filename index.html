@@ -31,7 +31,7 @@
 {"@type":["GroceryStore","LocalBusiness"],"@id":"https://ranaahmadmilk.shop/#shop",
 "name":"Rana Ahmad Milk Shop","alternateName":["رانا احمد ملک شاپ","Rana Ahmad Milk Shop Multan","Rana Milk Shop"],
 "url":"https://ranaahmadmilk.shop/","logo":"https://ranaahmadmilk.shop/logo.png",
-"image":["https://ranaahmadmilk.shop/og.jpg","https://ranaahmadmilk.shop/img/milk.webp","https://ranaahmadmilk.shop/img/farm.webp"],
+"image":["https://ranaahmadmilk.shop/og.jpg","https://ranaahmadmilk.shop/img/milk.webp","https://ranaahmadmilk.shop/img/farm.webp","https://ranaahmadmilk.shop/img/buffalo.webp","https://ranaahmadmilk.shop/img/cow.webp"],
 "description":"Pure fresh cow and buffalo milk, dahi, malai, desi ghee and chakki aata in Ghalla Mandi, Multan since 1970. Home delivery morning and evening.",
 "slogan":"Pure milk, the way it should be.",
 "telephone":"+92-323-6717478","foundingDate":"1970-08-28",
@@ -477,6 +477,37 @@ html[lang="ur"] .areas .chips li{font-family:var(--urdu); font-size:16px; line-h
   .areas .ask{margin-top:30px; padding:20px; border-radius:18px}
   .areas .ask .btn{width:100%}
 }
+
+/* ===== Our herd (VIP) ===== */
+.herd{background:linear-gradient(180deg,var(--bg),var(--soft) 55%,var(--bg))}
+.herd .grid{display:grid; grid-template-columns:1fr 1fr; gap:44px}
+.hcard{position:relative; border-radius:30px; overflow:hidden; background:#0a1626; color:#fff; isolation:isolate;
+  box-shadow:0 1px 0 rgba(196,149,44,.35), 0 40px 80px -40px rgba(10,22,38,.55)}
+.hcard::before{content:""; position:absolute; inset:10px; border:1px solid rgba(224,181,87,.55); border-radius:22px; z-index:2; pointer-events:none}
+.hcard .pic{position:relative; aspect-ratio:4/5; overflow:hidden}
+.hcard .pic img{position:absolute; inset:-8% 0; width:100%; height:116%; object-fit:cover; transition:scale 1.6s var(--ease); will-change:transform}
+.hcard:hover .pic img{scale:1.05}
+.hcard .pic::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,22,38,0) 38%,rgba(10,22,38,.55) 62%,rgba(10,22,38,.96) 100%)}
+.hcard .cap{position:absolute; left:0; right:0; bottom:0; z-index:3; padding:34px 36px 38px}
+.hcard .tag{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:#E0B557; border:1px solid rgba(224,181,87,.5); border-radius:99px; padding:7px 14px; margin-bottom:16px; background:rgba(10,22,38,.35); backdrop-filter:blur(6px)}
+.hcard .tag::before{content:"\25C6"; font-size:9px}
+.hcard h3{font-size:clamp(30px,3.2vw,46px); line-height:1.05; margin:0 0 10px; color:#fff}
+.hcard .ur{font-family:var(--urdu); font-size:20px; line-height:2; color:#E0B557; margin:0 0 8px; direction:rtl}
+.hcard p{color:rgba(255,255,255,.82); margin:0; max-width:44ch; font-size:15px; line-height:1.6}
+.herd .seal{display:flex; justify-content:center; align-items:center; gap:14px; margin-top:54px; color:var(--gold); font-size:12.5px; letter-spacing:.22em; text-transform:uppercase; text-align:center}
+.herd .seal::before,.herd .seal::after{content:""; height:1px; width:min(120px,18vw); background:linear-gradient(90deg,transparent,var(--gold))}
+.herd .seal::after{transform:scaleX(-1)}
+html[lang="ur"] .hcard .ur{display:none}
+@media (max-width:700px){
+  .herd .grid{grid-template-columns:1fr; gap:20px}
+  .hcard{border-radius:24px}
+  .hcard::before{inset:8px; border-radius:18px}
+  .hcard .pic{aspect-ratio:4/4.6}
+  .hcard .cap{padding:22px 22px 26px}
+  .hcard h3{font-size:30px}
+  .hcard p{font-size:14px}
+  .herd .seal{margin-top:30px; font-size:11px; letter-spacing:.16em}
+}
 </style>
 </head>
 <body>
@@ -491,6 +522,7 @@ html[lang="ur"] .areas .chips li{font-family:var(--urdu); font-size:16px; line-h
     <div class="right">
       <nav class="links" id="links">
         <a href="#products" data-t="nav1">Products</a>
+        <a href="#herd" data-t="navH">Our herd</a>
         <a href="#farm" data-t="nav2">Our promise</a>
         <a href="#areas" data-t="navA">Delivery areas</a>
         <a href="#order" data-t="nav3">Order</a>
@@ -598,6 +630,36 @@ html[lang="ur"] .areas .chips li{font-family:var(--urdu); font-size:16px; line-h
       </article>
     </div>
     <div class="dots" id="dots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section class="sec herd" id="herd">
+  <div class="wrap">
+    <div class="head">
+      <h2 data-r data-t="hh">Our own herd.</h2>
+      <p data-r data-t="hp">The milk starts here. Our own buffaloes and desi cows, fed green fodder and milked fresh every morning and evening.</p>
+    </div>
+    <div class="grid">
+      <article class="hcard" data-r>
+        <div class="pic"><img src="/img/buffalo.webp" srcset="/img/buffalo-800.webp 800w, /img/buffalo.webp 1920w" sizes="(max-width:700px) 100vw, 50vw" width="1920" height="1280" loading="lazy" decoding="async" alt="Black Murrah buffalo at the Rana Ahmad Milk Shop farm, Multan"></div>
+        <div class="cap">
+          <span class="tag" data-t="hb0">Buffalo milk</span>
+          <h3 data-t="hb1">Murrah buffalo</h3>
+          <p class="ur">بھینس کا خالص دودھ</p>
+          <p data-t="hb2">Thick, creamy milk with a heavy layer of malai. The one Multan families pick for chai, kheer and lassi.</p>
+        </div>
+      </article>
+      <article class="hcard" data-r>
+        <div class="pic"><img src="/img/cow.webp" srcset="/img/cow-800.webp 800w, /img/cow.webp 1920w" sizes="(max-width:700px) 100vw, 50vw" width="1920" height="1280" loading="lazy" decoding="async" alt="Desi Sahiwal cow at the Rana Ahmad Milk Shop farm, Multan"></div>
+        <div class="cap">
+          <span class="tag" data-t="hc0">Cow milk</span>
+          <h3 data-t="hc1">Desi cow</h3>
+          <p class="ur">دیسی گائے کا دودھ</p>
+          <p data-t="hc2">Lighter, gently sweet milk that is easy to digest. A favourite for children and the elderly.</p>
+        </div>
+      </article>
+    </div>
+    <p class="seal" data-r data-t="hs">Pure buffalo · Pure cow · Or a mix of both</p>
   </div>
 </section>
 
@@ -735,7 +797,7 @@ const money = n => Math.round(n).toLocaleString('en-US');
 const qfmt = n => (Math.round(n*100)/100).toString();
 const UR = {
   brand:'رانا احمد<small>ملک شاپ، ملتان</small>',
-  nav1:'مصنوعات', nav2:'ہمارا وعدہ', nav3:'آرڈر', nav4:'دکان', nav5:'ابھی آرڈر کریں', navBill:'میرا بل',
+  nav1:'مصنوعات', nav2:'ہمارا وعدہ', nav3:'آرڈر', nav4:'دکان', nav5:'ابھی آرڈر کریں', navBill:'میرا بل', navH:'ہمارے جانور',
   h1a:'خالص دودھ،', h1b:'بالکل ویسا', h1c:'جیسا ہونا چاہیے۔',
   lead:'تازہ دودھ، دہی، ملائی، دیسی گھی اور آٹا، سب ایک ہی فارم سے۔ فارم سے نکلنے سے پہلے ٹیسٹ ہوتا ہے اور غلہ منڈی کے آس پاس گھروں تک ٹھنڈا پہنچایا جاتا ہے۔',
   cta1:'آرڈر شروع کریں', cta2:'مصنوعات دیکھیں',
@@ -747,6 +809,10 @@ const UR = {
   c0:'ملائی', c1:'اتنی گاڑھی کہ چمچ کھڑا رہے۔', c2:'تازہ دودھ سے آہستہ آہستہ اتاری گئی ملائی۔ گرم پراٹھے پر لگائیں یا میٹھے میں ڈالیں۔', c3:'ساخت', c3v:'گاڑھی', c4:'بہترین ساتھ', c4v:'پراٹھا',
   g0:'دیسی گھی', g1:'ہاتھ سے بلویا۔ کوئی شارٹ کٹ نہیں۔', g2:'دانے دار سنہرا گھی، بھرپور خوشبو کے ساتھ، روایتی طریقے سے تیار۔ نہ ملاوٹ، نہ پریزرویٹو۔', g3:'طریقہ', g3v:'ہاتھ سے بلویا', g4:'ملاوٹ', g4v:'کوئی نہیں',
   a0:'آٹا', a1:'نرم روٹیوں کے لیے صاف گندم۔', a2:'روزمرہ روٹی اور پراٹھوں کے لیے صاف گندم کا آٹا، تازہ پیک۔', a3:'تیار', a3v:'گندم سے', a4:'پیکنگ', a4v:'تازہ',
+  hh:'ہمارے اپنے جانور۔', hp:'دودھ یہیں سے شروع ہوتا ہے۔ ہماری اپنی بھینسیں اور دیسی گائیں، ہری چارے پر پلی، اور ہر صبح شام تازہ دوہی جاتی ہیں۔',
+  hb0:'بھینس کا دودھ', hb1:'مرّاہ بھینس', hb2:'گاڑھا، ملائی دار دودھ جس پر موٹی ملائی آتی ہے۔ چائے، کھیر اور لسی کے لیے ملتان کے گھروں کی پسند۔',
+  hc0:'گائے کا دودھ', hc1:'دیسی گائے', hc2:'ہلکا، قدرتی میٹھا دودھ جو آسانی سے ہضم ہوتا ہے۔ بچوں اور بزرگوں کی پسند۔',
+  hs:'خالص بھینس · خالص گائے · یا دونوں ملا کر',
   fh:'سب کچھ ایک ہی فارم سے۔',
   f1:'ایک ہی ذریعہ', f1s:'دودھ، دہی، ملائی اور گھی سب ایک ہی فارم سے آتے ہیں، تاکہ آپ کو ہمیشہ پتا ہو کہ کہاں سے آیا۔',
   f2:'روزانہ چیکنگ', f2s:'ہر کھیپ نکلنے سے پہلے ٹیسٹ ہوتی ہے۔ نہ پانی، نہ پاؤڈر۔',
