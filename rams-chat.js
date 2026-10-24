@@ -30,9 +30,9 @@
     teaser: true,                             // chhota sa salam wala bubble
     aiEndpoint: '',                           // n8n webhook URL (khali ho to bot apne jawab deta hai)
     products: [
-      { id: 'milk',   ur: 'تازہ دودھ',          ro: 'Taza doodh',            price: 230,  unit: 'l',  step: 0.5 },
+      { id: 'milk',   ur: 'تازہ دودھ',          ro: 'Doodh',                 price: 230,  unit: 'l',  step: 0.5 },
       { id: 'dahi',   ur: 'دہی',                ro: 'Dahi',                  price: 250,  unit: 'kg', step: 0.5 },
-      { id: 'cream',  ur: 'تازہ کریم',          ro: 'Fresh cream',           price: 1500, unit: 'kg', step: 0.25 },
+      { id: 'cream',  ur: 'تازہ کریم',          ro: 'Cream (Malai)',         price: 1500, unit: 'kg', step: 0.25 },
       { id: 'ghee',   ur: 'دیسی گھی',           ro: 'Desi ghee',             price: 3000, unit: 'kg', step: 0.5 },
       { id: 'aata',   ur: 'گندم کا آٹا',        ro: 'Gandum ka aata',        price: 170,  unit: 'kg', step: 1 },
       { id: 'makhan', ur: 'مکھن',               ro: 'Makhan',                price: 2500, unit: 'kg', step: 0.25 },
