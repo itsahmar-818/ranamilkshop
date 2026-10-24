@@ -34,7 +34,9 @@
       { id: 'dahi',   ur: 'دہی',                ro: 'Dahi',                  price: 250,  unit: 'kg', step: 0.5 },
       { id: 'cream',  ur: 'تازہ کریم',          ro: 'Fresh cream',           price: 1500, unit: 'kg', step: 0.25 },
       { id: 'ghee',   ur: 'دیسی گھی',           ro: 'Desi ghee',             price: 3000, unit: 'kg', step: 0.5 },
-      { id: 'aata',   ur: 'گندم کا آٹا',        ro: 'Gandum ka aata',        price: 170,  unit: 'kg', step: 1 }
+      { id: 'aata',   ur: 'گندم کا آٹا',        ro: 'Gandum ka aata',        price: 170,  unit: 'kg', step: 1 },
+      { id: 'makhan', ur: 'مکھن',               ro: 'Makhan',                price: 2500, unit: 'kg', step: 0.25 },
+      { id: 'khoya',  ur: 'کھویا',              ro: 'Khoya',                 price: 1100, unit: 'kg', step: 0.25 }
     ]
   };
   (function (o) { if (o) for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) CONFIG[k] = o[k]; })(window.RAMS_CHAT_CONFIG);
@@ -191,7 +193,9 @@
     dahi: ['dahi', 'dahee', 'dahii', 'yogurt', 'yoghurt', 'curd', 'دہی'],
     cream: ['cream', 'kreem', 'malai', 'balai', 'کریم', 'ملائی', 'بالائی'],
     ghee: ['ghee', 'ghi', 'گھی'],
-    aata: ['aata', 'atta', 'flour', 'gandum', 'آٹا', 'آٹے', 'گندم']
+    aata: ['aata', 'atta', 'flour', 'gandum', 'آٹا', 'آٹے', 'گندم'],
+    makhan: ['makhan', 'makkhan', 'makhn', 'butter', 'مکھن'],
+    khoya: ['khoya', 'khoa', 'khowa', 'mawa', 'کھویا', 'کھوئے']
   };
   var PMAP = {}; for (var pk in PKEY) PKEY[pk].forEach(function (w) { PMAP[w] = pk; });
   var UNITW = { kg: 1, kilo: 1, kilos: 1, kilogram: 1, 'کلو': 1, l: 1, ltr: 1, litre: 1, liter: 1, litres: 1, liters: 1, 'لیٹر': 1, g: 0.001, gm: 0.001, gram: 0.001, grams: 0.001, 'گرام': 0.001, ml: 0.001 };
