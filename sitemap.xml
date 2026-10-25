@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://ranaahmadmilk.shop/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image><image:loc>https://ranaahmadmilk.shop/img/milk.webp</image:loc></image:image>
@@ -11,5 +11,40 @@
     <image:image><image:loc>https://ranaahmadmilk.shop/img/ghee.webp</image:loc></image:image>
     <image:image><image:loc>https://ranaahmadmilk.shop/img/aata.webp</image:loc></image:image>
     <image:image><image:loc>https://ranaahmadmilk.shop/img/farm.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ranaahmadmilk.shop/home-milk-delivery-multan/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://ranaahmadmilk.shop/img/milk.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ranaahmadmilk.shop/milk-price-multan/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://ranaahmadmilk.shop/img/buffalo.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ranaahmadmilk.shop/desi-ghee-multan/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://ranaahmadmilk.shop/img/ghee.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ranaahmadmilk.shop/wedding-milk-order-multan/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://ranaahmadmilk.shop/img/dahi.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ranaahmadmilk.shop/chakki-atta-multan/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://ranaahmadmilk.shop/img/aata.webp</image:loc></image:image>
   </url>
 </urlset>
