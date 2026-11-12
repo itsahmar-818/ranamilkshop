@@ -177,6 +177,7 @@
   }
   var I = {
     drop: 'M12 2.6c3.3 4.4 6.6 8 6.6 11.7a6.6 6.6 0 1 1-13.2 0c0-3.7 3.3-7.3 6.6-11.7z',
+    spark: 'M10.5 3.5l1.75 4.9a3.2 3.2 0 0 0 1.95 1.95l4.9 1.75-4.9 1.75a3.2 3.2 0 0 0-1.95 1.95L10.5 20.7l-1.75-4.9a3.2 3.2 0 0 0-1.95-1.95L1.9 12.1l4.9-1.75A3.2 3.2 0 0 0 8.75 8.4zM19 1.6l.75 2.05 2.05.75-2.05.75L19 7.2l-.75-2.05-2.05-.75 2.05-.75zM19.4 16.6l.55 1.5 1.5.55-1.5.55-.55 1.5-.55-1.5-1.5-.55 1.5-.55z',
     down: 'M6 9.5l6 6 6-6',
     x: 'M6.5 6.5l11 11M17.5 6.5l-11 11',
     up: 'M12 19V5.5M5.8 11.5L12 5.3l6.2 6.2',
@@ -307,6 +308,8 @@
     '.right .l{right:20px}.left .l{left:20px}',
     '.l::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--gold);opacity:0;animation:ring 2.6s var(--ease) 1.2s 2}',
     '.l:hover{transform:translateY(-3px)}.l:active{transform:scale(.93)}',
+    '.l svg{animation:tw 2.8s ease-in-out infinite;transform-origin:center}@keyframes tw{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.14) rotate(10deg)}}',
+    '.ab{position:absolute;left:-3px;top:-3px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#E8CB7C,#B4841F);box-shadow:0 0 0 2px var(--deep)}',
     '.open .l{opacity:0;pointer-events:none;transform:scale(.5)}',
 
     /* salam wala bubble */
@@ -477,12 +480,13 @@
     R.panel = el('div', 'p'); R.panel.setAttribute('role', 'dialog'); R.panel.tabIndex = -1; R.panel.setAttribute('aria-hidden', 'true');
     var h = el('div', 'h');
     var av = el('div', 'av');
-    var drop = icon(I.drop, { fill: 1, size: 24 });
+    var drop = icon(I.spark, { fill: 1, size: 24 });
     if (CONFIG.logoUrl) {
       var img = el('img'); img.alt = ''; img.width = 46; img.height = 46; img.decoding = 'async';
       img.onerror = function () { if (img.parentNode) img.parentNode.replaceChild(drop, img); };
       img.src = CONFIG.logoUrl; av.appendChild(img);
     } else av.appendChild(drop);
+    var ab = el('span', 'ab'); ab.appendChild(icon(I.spark, { fill: 1, size: 11 })); av.appendChild(ab);
     R.dot = el('span', 'dot'); av.appendChild(R.dot);
     var hn = el('div', 'hn'); R.name = el('span', 'n'); R.stat = el('span', 's'); hn.appendChild(R.name); hn.appendChild(R.stat);
     R.lang = el('button', 'lg'); R.lang.type = 'button';
@@ -507,7 +511,7 @@
 
     /* gol button */
     R.launch = el('button', 'l'); R.launch.type = 'button'; R.launch.setAttribute('aria-expanded', 'false');
-    R.launch.appendChild(icon(I.drop, { fill: 1, size: 28 }));
+    R.launch.appendChild(icon(I.spark, { fill: 1, size: 30 }));
 
     root.appendChild(R.panel); root.appendChild(R.launch);
     document.body.appendChild(host);
